@@ -10,7 +10,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { makeStyles } from '@material-ui/core/styles';
 
 import "react-quill/dist/quill.snow.css";
-import Rating from "react-rating";
+
 import ReactStars from "react-rating-stars-component";
 
 
