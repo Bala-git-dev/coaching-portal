@@ -1,9 +1,7 @@
 import React, { useState, useContext, useEffect, Fragment, useRef } from "react";
 import {  Button,Card, Form, Row, Col, OverlayTrigger, Tooltip, InputGroup, DropdownButton , Dropdown} from "react-bootstrap"
 import { Typeahead, Highlighter } from "react-bootstrap-typeahead";
-import {team_names_arr} from "C:/Users/bkumar/ceg-home/src/support/team_name.jsx"
 import "../../App.css";
-import {agent_names_root} from "C:/Users/bkumar/ceg-home/src/support/team_name_agent_name.jsx"
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -124,10 +122,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-        var contentKeys = Object.keys(team_names_arr.content);
-        var team_name_val = contentKeys.map((t) => 
-                       team_names_arr.content[t].map((e) => (e.team_name))
-                       );
+
         const [radioValue, setRadioValue] = useState("")            
         const classes = useStyles();
         const [api_Data_team, setApi_data_team] = useState([]);
