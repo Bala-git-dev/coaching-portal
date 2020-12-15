@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/coaching-portal/static/css/main.0cd83aae.chunk.css",
+    "main.js": "/coaching-portal/static/js/main.a46ec4d2.chunk.js",
+    "main.js.map": "/coaching-portal/static/js/main.a46ec4d2.chunk.js.map",
+    "runtime-main.js": "/coaching-portal/static/js/runtime-main.c2026d37.js",
+    "runtime-main.js.map": "/coaching-portal/static/js/runtime-main.c2026d37.js.map",
+    "static/css/2.b7fb9ba5.chunk.css": "/coaching-portal/static/css/2.b7fb9ba5.chunk.css",
+    "static/js/2.0bb40b06.chunk.js": "/coaching-portal/static/js/2.0bb40b06.chunk.js",
+    "static/js/2.0bb40b06.chunk.js.map": "/coaching-portal/static/js/2.0bb40b06.chunk.js.map",
+    "index.html": "/coaching-portal/index.html",
+    "static/css/2.b7fb9ba5.chunk.css.map": "/coaching-portal/static/css/2.b7fb9ba5.chunk.css.map",
+    "static/css/main.0cd83aae.chunk.css.map": "/coaching-portal/static/css/main.0cd83aae.chunk.css.map",
+    "static/js/2.0bb40b06.chunk.js.LICENSE.txt": "/coaching-portal/static/js/2.0bb40b06.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.c2026d37.js",
+    "static/css/2.b7fb9ba5.chunk.css",
+    "static/js/2.0bb40b06.chunk.js",
+    "static/css/main.0cd83aae.chunk.css",
+    "static/js/main.a46ec4d2.chunk.js"
+  ]
+}
