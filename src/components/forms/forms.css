@@ -1,0 +1,179 @@
+.verify-button {
+    border-radius: 0 0.25rem 0.25rem 0 !important;
+}
+
+.verify-button:disabled {
+    cursor: no-drop;
+}
+
+.custom-modal {
+    width: 80% !important;
+    max-width: 1200px !important;
+}
+
+.error-field {
+    background: #ffe2e2 !important;
+}
+
+.dqam-form-tooltips {
+    float: right;
+    vertical-align: middle;
+    height: auto;
+    color: #6f6f6f;
+}
+
+.dqam-form-tooltips:hover {
+    color: #282c34;
+}
+
+
+/* Custom checkbox for dqam req */
+.df-checkbox {
+    padding-left: 0;
+}
+
+.df-checkbox input[type=checkbox] {
+    overflow: hidden;
+    clip: rect(0px, 0px, 0px, 0px);
+}
+
+.df-checkbox label {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+}
+.df-checkbox label:before {
+    position: relative;
+    display: inline-block;
+    content: "";
+    width: 16px;
+    height: 16px;
+    border: 2px solid #C8CCD4;
+    border-radius: 3px;
+    vertical-align: middle;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    margin-right: 1rem;
+    margin-top: -3px;
+}
+.df-checkbox label:hover:before {
+    background: #a7d5ff;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
+.df-checkbox input[type=checkbox]:checked + label:before {
+    content: "\2713";
+    color: white;
+    align-content: stretch;
+    border-color: transparent;
+    background: #80bdff;
+    text-align: center;
+    transition: all .4s ease;
+    line-height: 85%;
+    font-weight: 900;
+}
+.df-checkbox input[type=checkbox]:checked:focus + label::before {
+    background: #80bdff;
+    border-color: #83abe3;
+    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
+.df-checkbox input[type=checkbox]:focus + label::before {
+    background: #a7d5ff;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.1rem rgba(0, 123, 255, 0.25);
+}
+.df-checkbox input[type=checkbox]:disabled + label::before {
+    cursor: not-allowed;
+    background: #a0a6b1;
+    border-color: #93939a;
+}
+.df-checkbox input[type=checkbox]:disabled + label {
+    cursor: not-allowed;
+}
+
+/* custom TagInput component */
+.tag-input {
+    cursor: text;
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    height: auto;
+    position: relative;
+}
+
+.tag-input:focus-within {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.tag-input > input {
+    height: 100%;
+    flex: 1;
+    border: none;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+}
+
+.tag-input > input:focus {
+    outline: transparent;
+}
+
+.tag-input > input:disabled, .tag-input > input[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+/* customize resend e-mail link in fail page */
+.resend-text {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.resend-text:hover {
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+/* customize (extending) Quill in DQAM-form to cover header panel */
+.ql-container {
+    min-height: 5rem;
+    font-size: 1rem;
+    border-radius: 0 0 5px 5px;
+}
+
+.ql-editor {
+    min-height: 1rem;
+    min-width: 30rem;
+    font-family: "Titillium Web";
+}
+
+.ql-toolbar {
+    border-radius: 5px 5px 0 0;
+    font-family: "Titillium Web" !important;
+}
+
+
+@keyframes spinner {
+    to { transform: rotate(360deg); }
+}
+.fa-spinner {
+    /* Apply 'spinner' keyframes looping once every second (1s)  */
+    animation: spinner 1s linear infinite;
+}
+
+#dqam-name-input {
+    background-image: none;
+}
