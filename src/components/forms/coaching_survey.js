@@ -1,19 +1,14 @@
-import React, { useState, useContext, useEffect, Fragment, useRef } from "react";
-import {  Button,Card, Form, Row, Col, OverlayTrigger, Tooltip, InputGroup, DropdownButton , Dropdown} from "react-bootstrap"
-import { Typeahead, Highlighter } from "react-bootstrap-typeahead";
+import React, { useState, useEffect} from "react";
+import {  Button,Card, Form, Row, Col} from "react-bootstrap"
+import { Typeahead } from "react-bootstrap-typeahead";
 
 import "../../App.css";
 
-import DatePicker from "react-datepicker";
+
 import 'react-datepicker/dist/react-datepicker.css';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faQuestionCircle,faUsers } from "@fortawesome/free-regular-svg-icons";
-import { faStar,faCheck, faSpinner } from "@fortawesome/free-solid-svg-icons";
+
 import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
-import axios from 'axios';
-import ReactQuill from "react-quill";
-import styled from "styled-components";
+
 import "react-quill/dist/quill.snow.css";
 import Rating from "react-rating";
 import ReactStars from "react-rating-stars-component";
