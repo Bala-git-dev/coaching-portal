@@ -212,28 +212,52 @@ import "react-quill/dist/quill.snow.css"
                                     <Form.Label column sm={8}>Coaching Start </Form.Label>
                                     <DatePicker
                                         selected={coachingStart}
+                                        //popperPlacement="bottom" 
                                         onChange={date => setcoachingStart(date)}
                                         showTimeSelect
                                         //placeholderText="Click to select coaching start time"
                                         timeFormat="HH:mm"
                                         timeIntervals={15}
-                                        timeCaption="time"
+                                        timeCaption="Time"
                                         dateFormat="yyyy-MM-dd H:mm"
-                                        customInput={<ExampleCustomInput />}
+                                       customInput={<ExampleCustomInput />}
+                                        popperModifiers={{
+                                            flip: {
+                                                behavior: ['bottom'] // don't allow it to flip to be above
+                                            },
+                                            preventOverflow: {
+                                                enabled: false // tell it not to try to stay within the view (this prevents the popper from covering the element you clicked)
+                                            },
+                                            hide: {
+                                                enabled: false // turn off since needs preventOverflow to be enabled
+                                            }
+                                        }}
+
                                     />
                                 </Col>
                                 <Col >
                                     <Form.Label column sm={8}>Coaching End</Form.Label>
-                                    <DatePicker
+                                    <DatePicker 
                                         selected={coachingEnd}
                                         onChange={date => setcoachingEnd(date)}
                                         showTimeSelect
                                         //placeholderText="Click to select coaching start time"
                                         timeFormat="HH:mm"
                                         timeIntervals={15}
-                                        timeCaption="time"
+                                        timeCaption="Time"
                                         dateFormat="yyyy-MM-dd H:mm"
                                         customInput={<ExampleCustomInput />}
+                                        popperModifiers={{
+                                            flip: {
+                                                behavior: ['bottom'] // don't allow it to flip to be above
+                                            },
+                                            preventOverflow: {
+                                                enabled: false // tell it not to try to stay within the view (this prevents the popper from covering the element you clicked)
+                                            },
+                                            hide: {
+                                                enabled: false // turn off since needs preventOverflow to be enabled
+                                            }
+                                        }}
                                     />
                                 </Col>
                                 <Col >

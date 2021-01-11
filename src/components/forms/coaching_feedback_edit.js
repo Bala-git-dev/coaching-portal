@@ -124,6 +124,7 @@ import "react-quill/dist/quill.snow.css"
             console.log(data);
             data.map((obj) => console.log(obj.teamName));
             setApi_data_team(data);
+            setPrev_insights('test text');
         };
 
         useEffect(() => {
