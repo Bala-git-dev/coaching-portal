@@ -8,7 +8,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"
 
 
-    const Coaching_feedback_form = () => {
+    const Coaching_feedback_form_edit = () => {
         const [team_val_sel , set_team_val_sel] = useState([]);
         const [agent_name , set_agent_name] = useState([]);
         const [coachingStart , setcoachingStart] = useState(new Date());
@@ -46,7 +46,6 @@ import "react-quill/dist/quill.snow.css"
 
        
         const submitParam ={
-
             activitytype: activitytype,
             coachingStartDatetime: coachingStart,
             coachingEndDatetime: coachingEnd,
@@ -818,4 +817,4 @@ import "react-quill/dist/quill.snow.css"
 
     
 }
-export default Coaching_feedback_form
+export default Coaching_feedback_form_edit

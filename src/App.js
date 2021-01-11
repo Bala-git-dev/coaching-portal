@@ -1,91 +1,25 @@
-import React, { useState, useContext, useEffect, Fragment, useRef } from "react";
-import { Button, Card, Form, Row, Col, OverlayTrigger, Tooltip, InputGroup } from "react-bootstrap";
-import axios from 'axios';
-// import Radio from '@material-ui/core/Radio';
-// import RadioGroup from '@material-ui/core/RadioGroup';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import FormControl from '@material-ui/core/FormControl';
-// import FormLabel from '@material-ui/core/FormLabel';
-// import { Button } from '@material-ui/core';
+import React, {} from "react";
 import {Navbar, Nav, NavDropdown} from "react-bootstrap";
 import agoda_logo from './images/agoda-logo-v2.png'
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory, Switch } from "react-router";
+import {Route, Switch } from "react-router";
 import './App.css';
 import {
     COACHING_FEEDBACK_PATH,
     COACHING_OBSERVATION_PATH,
-    COACHING_SATISFACTION_PATH,
     COACHING_READONLY_PATH,
-    COACHING_SURVEY_PATH
+    COACHING_SURVEY_PATH,
+    COACHING_LIST_PATH,
+    COACHING_FEEDBACK_EDIT_PATH
 } from "./variables/PathLists";
 import Coaching_feedback from "./components/forms/coaching_feedback.container";
 import Coaching_readonly from "./components/forms/coaching_readonly.container";
 import Coaching_survey from "./components/forms/coaching_survey.container";
-import {team_names} from "./support/team_name.jsx"
+import Coaching_list from "./components/forms/coaching_list.container";
+import Coaching_feedback_edit from "./components/forms/coaching_feedback_edit.container";
+
+
 
 class App extends React.Component {
-    state = { 
-  
-        // Initially, no file is selected 
-        selectedFile: null
-      }; 
-       
-      // On file select (from the pop up) 
-      onFileChange = event => { 
-       
-        // Update the state 
-        this.setState({ selectedFile: event.target.files[0] }); 
-       
-      }; 
-       
-      // On file upload (click the upload button) 
-      onFileUpload = () => { 
-       
-        // Create an object of formData 
-        const formData = new FormData(); 
-       
-        // Update the formData object 
-        formData.append( 
-          "myFile", 
-          this.state.selectedFile, 
-          this.state.selectedFile.name 
-        ); 
-       
-        // Details of the uploaded file 
-        console.log(this.state.selectedFile); 
-       
-        // Request made to the backend api 
-        // Send formData object 
-        axios.post("api/uploadfile", formData); 
-      }; 
-       
-      // File content to be displayed after 
-      // file upload is complete 
-      fileData = () => { 
-       
-        if (this.state.selectedFile) { 
-            
-          return ( 
-            <div> 
-              <h2>File Details:</h2> 
-              <p>File Name: {this.state.selectedFile.name}</p> 
-              <p>File Type: {this.state.selectedFile.type}</p> 
-              <p> 
-                Last Modified:{" "} 
-                {this.state.selectedFile.lastModifiedDate.toDateString()} 
-              </p> 
-            </div> 
-          ); 
-        } else { 
-          return ( 
-            <div> 
-              <br /> 
-              <h4>{/* Choose before Pressing the Upload button */}</h4> 
-            </div> 
-          ); 
-        } 
-      }; 
-
     
     render() {
       return (
@@ -118,12 +52,15 @@ class App extends React.Component {
                                         <NavDropdown.Item href="">TM KPI</NavDropdown.Item>
                                     </NavDropdown>
                                     <NavDropdown title="Survey Forms" id="collapsible-nav-dropdown">
-                                       
+                                        <NavDropdown.Item href={COACHING_LIST_PATH}>Landing Page</NavDropdown.Item>
+                                        <NavDropdown.Divider />
                                         <NavDropdown.Item href={COACHING_FEEDBACK_PATH}>Coaching Feedback- TM</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item href={COACHING_READONLY_PATH}>Coaching Feedback Readonly- Agent</NavDropdown.Item>
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item href={COACHING_SURVEY_PATH}>Coaching Survey- Agent</NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item href={COACHING_FEEDBACK_EDIT_PATH}>Coaching Feedback- TM_Edit</NavDropdown.Item>
                                     </NavDropdown>
                             </Nav>                           
                         </Navbar>
@@ -140,6 +77,8 @@ class App extends React.Component {
                 <Route component={Coaching_feedback} path={COACHING_OBSERVATION_PATH}  />
                 <Route component={Coaching_survey} path={COACHING_SURVEY_PATH} />
                 <Route component={Coaching_readonly} path={COACHING_READONLY_PATH} />
+                <Route component={Coaching_list} path={COACHING_LIST_PATH} />
+                <Route component={Coaching_feedback_edit} path={COACHING_FEEDBACK_EDIT_PATH} />
             </Switch> 
             <div className="overlay" />
         </div>
