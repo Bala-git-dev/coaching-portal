@@ -4,12 +4,8 @@ import "../../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle,faUsers } from "@fortawesome/free-regular-svg-icons";
 import { faTrash, faSpinner,faPlusCircle,faPlus,fasortalphaup } from "@fortawesome/free-solid-svg-icons";
-import TextField from '@material-ui/core/TextField';
-import styled from "styled-components";
 import {COACHING_FEEDBACK_PATH} from "../../variables/PathLists";
 import {Link} from "react-router-dom";
-import ReactDOM from 'react-dom';
-import MaterialTable from 'material-table';
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import Check from '@material-ui/icons/Check';
@@ -25,14 +21,10 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
-
-import { Grid } from 'ag-grid-community';
 import { AgGridColumn, AgGridReact } from 'ag-grid-react';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-
-
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -60,9 +52,16 @@ const Coaching_list_page = () => {
   const [gridApi, setGridApi] = useState(null);
     const [gridColumnApi, setGridColumnApi] = useState(null);
 
+    function urlGenerate() {
+      console.log("bala");
+      return "a";
+    }
+
+
+
     const [rowData, setRowData] = useState([
-      { ID: '145124',Date:"12/11/2020", Provider: 'test', Receiver: 'test1', Activity: 'Review',Status: 'In Progress',url: '/coaching_feedback_edit/145124'},
-      { ID: '145125',Date:"12/08/2020", Provider: 'test2', Receiver: 'test3', Activity: 'Coach',Status: 'Done',url: '/coaching_feedback_edit/145125'}
+      { ID: '2',Date:"12/11/2020", Provider: 'test', Receiver: 'test1', Activity: 'Review',Status: 'Done',url: '/coaching_readonly/2',ModDate: "12/18/2020"},
+      { ID: '3',Date:"12/08/2020", Provider: 'test2', Receiver: 'test3', Activity: 'Coach',Status: 'In Progress',url: '/coaching_feedback_edit/3',ModDate: "12/21/2020"}
     ]);
 
     function onGridReady(params) {
@@ -70,13 +69,18 @@ const Coaching_list_page = () => {
         setGridColumnApi(params.columnApi);
         params.api.sizeColumnsToFit(); 
     }
+
+    function myRowClickedHandler(event) {
+      console.log('The row was clicked');
+      return '<a href="#"> </a>';
+  }
     const submitCall = async () => {
       console.log("Submit form");
   };
     const gridOptions = {
       // define 3 columns
       columnDefs: [
-          { headerName: 'Coaching ID', field: 'ID' ,
+          { headerName: 'ID', field: 'ID' ,
           icons: {
             sortAscending: '<i class="ag ag-sort-alpha-up"/>',
             sortDescending: '<i class="ag ag-sort-alpha-down"/>',
@@ -101,15 +105,23 @@ const Coaching_list_page = () => {
           { headerName: 'Action', field: 'url',
           cellRenderer: (params) => {
             var link = document.createElement('a');
-            link.href = 'http://localhost:3000'+params.data.url;
+            link.href = ''+params.data.url/* +urlGenerate() */;
             link.innerText = "Edit";
            
             return link;
         }},
-        { headerName: 'Status', field: 'Status',
+        { headerName: 'Delete', field: 'Status',
         cellRendererFramework: function(params) {
           return <Button onClick={submitCall} variant="primary" size="sm" > <FontAwesomeIcon icon={faTrash} size = '1x' />&nbsp; Delete </Button>
-        }}
+        }},
+        { headerName: 'Modified Date', field: 'ModDate' ,type: ['dateColumn'],
+          filterParams: {
+            filterOptions: ['inRange', 'greaterThan', 'lessThan'],
+            defaultOption: 'inRange',
+            buttons: ['apply', 'clear', 'reset'],
+            closeOnApply: true
+          }
+        }
       ],
       defaultColDef: {
         resizable: true,
@@ -194,7 +206,8 @@ const Coaching_list_page = () => {
                 rowData={rowData}
                 columnDefs={gridOptions.columnDefs}
                 defaultColDef={gridOptions.defaultColDef}
-                columnTypes={gridOptions.columnTypes}>
+                columnTypes={gridOptions.columnTypes}
+                onRowClicked= {myRowClickedHandler}>
             </AgGridReact>
         </div>
             </Card.Body>

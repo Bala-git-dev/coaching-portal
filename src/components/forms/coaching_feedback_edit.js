@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import dateFormat from 'dateformat';
+import { useParams } from 'react-router-dom';
 
 
     const Coaching_feedback_form_edit = () => {
@@ -44,6 +44,7 @@ import dateFormat from 'dateformat';
         const [followup, set_followup_Radio] = useState('');
         const [followdate, setFollowdate] = useState(new Date());
         const [mgr_commit, setMgr_commit] = useState('');
+        
 
        
         const submitParam ={
@@ -93,7 +94,7 @@ import dateFormat from 'dateformat';
         const [api_Readdata, setApi_Readdata] = useState([]);
         const apiURL_team = "http://localhost:8000/api/teams/";
         const submitAPI = "http://localhost:3004/log/";
-        const apiRead = "http://localhost:3004/log/2";
+        
 
         
         // const apiURL = "http://10.120.14.129:5000/get";
@@ -115,11 +116,13 @@ import dateFormat from 'dateformat';
 
         useEffect(() => {
             console.log("Start reading");
+            
             ReadfromAPI();
         }, []);
-
+        const {id} = useParams();
         const ReadfromAPI = async () => {
             console.log("called from apiCall");
+            const apiRead = `http://localhost:3004/log/${id}`;
             const response = await fetch(apiRead,{
                 method: 'GET',
                 credentials: 'same-origin',
@@ -220,10 +223,14 @@ import dateFormat from 'dateformat';
                 setApi_data_agent(data);
             }
         };
-        useEffect(() => {
-            console.log(submitParam);
-        }, [coachingStart]);
+         useEffect(() => {
+            //console.log(submitParam);
+            //console.log(window.location.pathname);
+            //console.log(id);
+        }, [coachingStart]); 
 
+        
+        
 
         const submitCall = async () => {
             console.log("Submit form");

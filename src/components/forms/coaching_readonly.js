@@ -15,8 +15,7 @@ import styled from "styled-components";
 import "react-quill/dist/quill.snow.css"
 import { useQuill } from 'react-quilljs';
 import {COACHING_SURVEY_PATH} from "../../variables/PathLists";
-import {Link} from "react-router-dom";
-
+import {Link , useParams } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -87,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
         const classes = useStyles();
         const [api_Data_team, setApi_data_team] = useState([]);
         const [api_Data_agent, setApi_data_agent] = useState([]);
-        const apiURL_team = "http://localhost:3004/log/";
+        
         const submitAPI = "http://localhost:3004/log/";
 
         
@@ -98,12 +97,12 @@ const useStyles = makeStyles((theme) => ({
         }, []);
 
         useEffect(() => {
-            const temp = api_Data_team.map(obj => obj.attachment);
-            //const temp = api_Data_team.filter(obj => obj.id === 2).map(obj => obj.attachment);
+            const temp = api_Data_team.attachment;
+            //const temp = api_Data_team.filter(obj => obj.id === 2).attachment);
             if (temp !== null) {
                 // console.log(temp)
                 // console.log(temp[0])
-                setAttachment(temp[0]);
+                setAttachment(api_Data_team.attachment);
             }
         }, [api_Data_team]);
         
@@ -117,9 +116,10 @@ const useStyles = makeStyles((theme) => ({
                 set_focus_Area(radioValue);
             }
         }, [radioValue]); */
-
+        const {id} = useParams();
         const apiCall_team = async () => {
             console.log("called from apiCall");
+            const apiURL_team = `http://localhost:3004/log/${id}`;
             const response = await fetch(apiURL_team,{
                 method: 'GET',
                 credentials: 'same-origin',
@@ -130,11 +130,11 @@ const useStyles = makeStyles((theme) => ({
 
             const data = await response.json();  
             console.log(data);
-            data.map((obj) => console.log(obj.activitytype));
+            //data.map((obj) => console.log(obj.activitytype));
             setApi_data_team(data);
-            // console.log('here is what i load')
-            // console.log(api_Data_team.map(obj => obj.attachment))
-             //setAttachment(api_Data_team.map(obj => obj.attachment));
+            console.log("here is what i load");
+            console.log(api_Data_team.activitytype);
+             //setAttachment(api_Data_team.attachment));
         };
 
         /* React.useEffect(() => {
@@ -201,9 +201,9 @@ const useStyles = makeStyles((theme) => ({
 
       useEffect(() => {
           console.log('before');
-          console.log(attachment);
+          console.log(api_Data_team.activitytype);
           console.log('after')
-      }, [attachment]);
+      }, []);
 
       const [somevar, setSomevar] = useState("<p>vattttxyz</p>");
         
@@ -219,7 +219,7 @@ const useStyles = makeStyles((theme) => ({
                             <Row>
                             <Col >
                                 <Form.Label column sm={8} className="text-center" style={{width: "100%"}}>
-                                <span style={{fontSize: 20, fontWeight: "bold"}}>Activity </span> <br/> {api_Data_team.map(obj => obj.activitytype)}
+                                <span style={{fontSize: 20, fontWeight: "bold"}}>Activity </span> <br/> {api_Data_team.activitytype}
                                 </Form.Label>
                                 
                                 
@@ -227,13 +227,13 @@ const useStyles = makeStyles((theme) => ({
                                 <Col>
                                     <Form.Label column sm={8} className="text-center" style={{width: "100%"}}>
                                     <span style={{fontSize: 20, fontWeight: "bold"}}>Coaching Start </span><br/>
-                                    {api_Data_team.map(obj => obj.coachingStartDatetime)}
+                                    {api_Data_team.coachingStartDatetime}
                                     </Form.Label>
                                 </Col>
                                 <Col >
                                 <Form.Label column sm={8}className="text-center" style={{width: "100%"}}>
                                     <span style={{fontSize: 20, fontWeight: "bold"}}>Coaching End </span><br/>
-                                    {api_Data_team.map(obj => obj.coachingEndDatetime)}
+                                    {api_Data_team.coachingEndDatetime}
                                     </Form.Label>
                                 </Col>
                                 
@@ -245,7 +245,7 @@ const useStyles = makeStyles((theme) => ({
                                 <Col>
                                     <Form.Label>
                                     <span style={{fontSize: 20, fontWeight: "bold"}}>Agent Name </span><br/>
-                                    {api_Data_team.map(obj => obj.agent_name)}
+                                    {api_Data_team.agent_name}
                                     </Form.Label>
                                 </Col>
                             </Row>
@@ -254,7 +254,7 @@ const useStyles = makeStyles((theme) => ({
                             <Col>
                                 <Form.Label>
                                 <span style={{fontSize: 20, fontWeight: "bold"}}>Previous Coaching Insights</span><br/>
-                                {api_Data_team.map(obj => obj.prev_insights)}
+                                {api_Data_team.prev_insights}
                                 </Form.Label>
                                 
                             </Col>
@@ -265,7 +265,7 @@ const useStyles = makeStyles((theme) => ({
                             <Col>
                             <Form.Label>
                                 <span style={{fontSize: 20, fontWeight: "bold"}}>Strenghts</span><br/>
-                                {api_Data_team.map(obj => obj.strenghts)}
+                                {api_Data_team.strenghts}
                                 </Form.Label>
                             </Col>
                             </Row>
@@ -297,25 +297,25 @@ const useStyles = makeStyles((theme) => ({
                             <Row>
 
                             <Col>       
-                                {api_Data_team.map(obj => obj.kpi1)}
+                                {api_Data_team.kpi1}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.curr_stand1)}
+                                {api_Data_team.curr_stand1}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.goal1)}
+                                {api_Data_team.goal1}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.behaviour1)}
+                                {api_Data_team.behaviour1}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.channel1)}
+                                {api_Data_team.channel1}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.root_cause1)}
+                                {api_Data_team.root_cause1}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.educ_tools1)}
+                                {api_Data_team.educ_tools1}
                             </Col>
                             
                             </Row>
@@ -323,50 +323,50 @@ const useStyles = makeStyles((theme) => ({
                             <Row>
 
                             <Col>       
-                                {api_Data_team.map(obj => obj.kpi2)}
+                                {api_Data_team.kpi2}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.curr_stand2)}
+                                {api_Data_team.curr_stand2}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.goal2)}
+                                {api_Data_team.goal2}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.behaviour2)}
+                                {api_Data_team.behaviour2}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.channel2)}
+                                {api_Data_team.channel2}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.root_cause2)}
+                                {api_Data_team.root_cause2}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.educ_tools2)}
+                                {api_Data_team.educ_tools2}
                             </Col>
                             
                             </Row>
                             <Row>
 
                             <Col>       
-                                {api_Data_team.map(obj => obj.kpi3)}
+                                {api_Data_team.kpi3}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.curr_stand3)}
+                                {api_Data_team.curr_stand3}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.goal3)}
+                                {api_Data_team.goal3}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.behaviour3)}
+                                {api_Data_team.behaviour3}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.channel3)}
+                                {api_Data_team.channel3}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.root_cause3)}
+                                {api_Data_team.root_cause3}
                             </Col>
                             <Col>
-                                {api_Data_team.map(obj => obj.educ_tools3)}
+                                {api_Data_team.educ_tools3}
                             </Col>
                             
                             </Row>
@@ -376,7 +376,7 @@ const useStyles = makeStyles((theme) => ({
                             
                             <span style={{fontSize: 20 , fontWeight: "bold"} }>Other focus area discussed</span>
                             <br/> 
-                            {api_Data_team.map(obj => obj.other_focus)}
+                            {api_Data_team.other_focus}
                             
                             </Col>
                             
@@ -387,7 +387,7 @@ const useStyles = makeStyles((theme) => ({
                             
                             <span style={{fontSize: 20 , fontWeight: "bold"} }>SMART action plan</span> <span style={{color: "gray"}}>Specific | Measurable | Attainable | Relevant | Time Bound</span> 
                             <br></br>
-                                {api_Data_team.map(obj => obj.smart)}
+                                {api_Data_team.smart}
                             
                             </Col>
                             </Row>
@@ -398,7 +398,7 @@ const useStyles = makeStyles((theme) => ({
                                 <Form.Label as="followup_radio" column sm={4}>
                                 <span style={{fontSize: 20 , fontWeight: "bold"} }>Does this need a follow-up?</span>
                                 </Form.Label>
-                                {api_Data_team.map(obj => obj.followup)}
+                                {api_Data_team.followup}
                             </Col>
                             </Row>
                             <Row>
@@ -406,7 +406,7 @@ const useStyles = makeStyles((theme) => ({
                                 <Form.Label as="followupdate" column sm={4}>
                                 <span style={{fontSize: 20 , fontWeight: "bold"} }>Date:</span>
                                 </Form.Label>
-                                {api_Data_team.map(obj => obj.followdate)}
+                                {api_Data_team.followdate}
                             </Col>
                             </Row>
                             <Row>
@@ -414,7 +414,7 @@ const useStyles = makeStyles((theme) => ({
                             <Form.Label as="followupdate" column sm={4}>
                             <span style={{fontSize: 20, fontWeight: "bold"}}>Manager Commitment</span><br/>
                             </Form.Label> <br></br>
-                            {api_Data_team.map(obj => obj.mgr_commit)}
+                            {api_Data_team.mgr_commit}
                             </Col>
                             </Row>
 
