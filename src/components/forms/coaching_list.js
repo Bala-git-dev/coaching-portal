@@ -3,7 +3,7 @@ import {  Button,Card, Form, Row, Col, OverlayTrigger, Tooltip, InputGroup, Drop
 import "../../App.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faQuestionCircle,faUsers } from "@fortawesome/free-regular-svg-icons";
-import { faCheck, faSpinner,faPlusCircle,faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faSpinner,faPlusCircle,faPlus,fasortalphaup } from "@fortawesome/free-solid-svg-icons";
 import TextField from '@material-ui/core/TextField';
 import styled from "styled-components";
 import {COACHING_FEEDBACK_PATH} from "../../variables/PathLists";
@@ -25,6 +25,13 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+
+import { Grid } from 'ag-grid-community';
+import { AgGridColumn, AgGridReact } from 'ag-grid-react';
+
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+
 
 
 const tableIcons = {
@@ -48,9 +55,94 @@ const tableIcons = {
   };
 
 
-const Coaching_list_page = () => {            
+const Coaching_list_page = () => { 
+  
+  const [gridApi, setGridApi] = useState(null);
+    const [gridColumnApi, setGridColumnApi] = useState(null);
+
+    const [rowData, setRowData] = useState([
+      { ID: '145124',Date:"12/11/2020", Provider: 'test', Receiver: 'test1', Activity: 'Review',Status: 'In Progress',url: '/coaching_feedback_edit/145124'},
+      { ID: '145125',Date:"12/08/2020", Provider: 'test2', Receiver: 'test3', Activity: 'Coach',Status: 'Done',url: '/coaching_feedback_edit/145125'}
+    ]);
+
+    function onGridReady(params) {
+        setGridApi(params.api);
+        setGridColumnApi(params.columnApi);
+        params.api.sizeColumnsToFit(); 
+    }
+    const submitCall = async () => {
+      console.log("Submit form");
+  };
+    const gridOptions = {
+      // define 3 columns
+      columnDefs: [
+          { headerName: 'Coaching ID', field: 'ID' ,
+          icons: {
+            sortAscending: '<i class="ag ag-sort-alpha-up"/>',
+            sortDescending: '<i class="ag ag-sort-alpha-down"/>',
+          }},
+          { headerName: 'Date', field: 'Date' ,type: ['dateColumn'],
+          filterParams: {
+            filterOptions: ['inRange', 'greaterThan', 'lessThan'],
+            defaultOption: 'inRange',
+            buttons: ['apply', 'clear', 'reset'],
+            closeOnApply: true
+          }
+        },
+          { headerName: 'Provider', field: 'Provider'},
+          { headerName: 'Receiver', field: 'Receiver' },
+          { headerName: 'Activity', field: 'Activity', 
+            filterParams: {
+              filterOptions: ['contains', 'startsWith', 'endsWith'],
+              defaultOption: 'startsWith'
+            }
+          },
+          { headerName: 'Status', field: 'Status'},
+          { headerName: 'Action', field: 'url',
+          cellRenderer: (params) => {
+            var link = document.createElement('a');
+            link.href = 'http://localhost:3000'+params.data.url;
+            link.innerText = "Edit";
+           
+            return link;
+        }},
+        { headerName: 'Status', field: 'Status',
+        cellRendererFramework: function(params) {
+          return <Button onClick={submitCall} variant="primary" size="sm" > <FontAwesomeIcon icon={faTrash} size = '1x' />&nbsp; Delete </Button>
+        }}
+      ],
+      defaultColDef: {
+        resizable: true,
+        filter: true,
+        floatingFilter: false,
+        sortable: true
+    },
+    columnTypes: {
+    dateColumn: {
+      filter: 'agDateColumnFilter',
+      filterParams: {
+        comparator: function (filterLocalDateAtMidnight, cellValue) {
+          var dateParts = cellValue.split('/');
+          var day = Number(dateParts[0]);
+          var month = Number(dateParts[1]) - 1;
+          var year = Number(dateParts[2]);
+          var cellDate = new Date(year, month, day);
+          if (cellDate < filterLocalDateAtMidnight) {
+            return -1;
+          } else if (cellDate > filterLocalDateAtMidnight) {
+            return 1;
+          } else {
+            return 0;
+          }
+        },
+      },
+    }
+  }
+
+  }
+
       return (
-        
+  
         <Card style={{ padding: '0rem', boxShadow: '0 0 0.7rem 0.3rem rgba(100, 100, 100, 0.2)', width:"100%" }}>
             <Card.Body>
                 {/* <Card.Title>
@@ -66,10 +158,11 @@ const Coaching_list_page = () => {
                             </Col>
                         </Row> 
                 <br/>
-        <div style={{ maxWidth: '100%' }}>
+        {/* <div style={{ maxWidth: '100%' }}>
         <MaterialTable
         options={{
           filtering: true,
+          search: true,
           actionsColumnIndex: -1
         }}
           columns={[
@@ -93,9 +186,21 @@ const Coaching_list_page = () => {
             }
           ]}
         />
-      </div> 
+      </div>  */}
+
+      <div className="ag-theme-alpine" style={{ height: 400 , width: '100%' }}>
+            <AgGridReact
+                onGridReady={onGridReady}
+                rowData={rowData}
+                columnDefs={gridOptions.columnDefs}
+                defaultColDef={gridOptions.defaultColDef}
+                columnTypes={gridOptions.columnTypes}>
+            </AgGridReact>
+        </div>
             </Card.Body>
         </Card>
+
+        
       );
 
     

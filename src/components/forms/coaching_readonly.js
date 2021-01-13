@@ -14,6 +14,8 @@ import ReactQuill from "react-quill";
 import styled from "styled-components";
 import "react-quill/dist/quill.snow.css"
 import { useQuill } from 'react-quilljs';
+import {COACHING_SURVEY_PATH} from "../../variables/PathLists";
+import {Link} from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -437,7 +439,7 @@ const useStyles = makeStyles((theme) => ({
             <br/>
             <Row>
                 <Col md={{ span: 4, offset: 5 }}>
-                <Button variant="outline-primary" /* onClick={submitCall} */>Acknowledge</Button>{' '}
+                <Button as={Link} variant="outline-primary" /* onClick={submitCall} */ to={COACHING_SURVEY_PATH}>Acknowledge</Button>{' '}
                 </Col>
             </Row>
             <div></div>

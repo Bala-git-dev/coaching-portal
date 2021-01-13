@@ -5,7 +5,8 @@ import "../../App.css";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"
+import "react-quill/dist/quill.snow.css";
+import dateFormat from 'dateformat';
 
 
     const Coaching_feedback_form_edit = () => {
@@ -82,22 +83,24 @@ import "react-quill/dist/quill.snow.css"
         }
 
 
-        const ExampleCustomInput = ({ value, onClick }) => (
+        const Button_Style = ({ value, onClick }) => (
             <Button variant="outline-primary" className="example-custom-input" onClick={onClick}>
               {value}
             </Button>
           );
         const [api_Data_team, setApi_data_team] = useState([]);
         const [api_Data_agent, setApi_data_agent] = useState([]);
+        const [api_Readdata, setApi_Readdata] = useState([]);
         const apiURL_team = "http://localhost:8000/api/teams/";
         const submitAPI = "http://localhost:3004/log/";
+        const apiRead = "http://localhost:3004/log/2";
 
         
         // const apiURL = "http://10.120.14.129:5000/get";
-        useEffect(() => {
+        /* useEffect(() => {
             console.log("Loaded");
             apiCall_team();
-        }, []);
+        }, []); */
 
         useEffect(() => {
             console.log("Loaded");
@@ -110,9 +113,77 @@ import "react-quill/dist/quill.snow.css"
             }
         }, [radioValue]); */
 
-        const apiCall_team = async () => {
+        useEffect(() => {
+            console.log("Start reading");
+            ReadfromAPI();
+        }, []);
+
+        const ReadfromAPI = async () => {
             console.log("called from apiCall");
-            const response = await fetch(apiURL_team,{
+            const response = await fetch(apiRead,{
+                method: 'GET',
+                credentials: 'same-origin',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            const data = await response.json();  
+            console.log(data);
+            //data.map((obj) => console.log(obj.activitytype));
+            setApi_Readdata(data);
+            // console.log('here is what i load')
+            // console.log(api_Data_team.map(obj => obj.attachment))
+             //setAttachment(api_Data_team.map(obj => obj.attachment));
+
+             if (data) {
+                // set starting data
+                setActivitytype(data.activitytype);
+                setcoachingStart(data.coachingStartDatetime);
+                setcoachingEnd(data.coachingEndDatetime);
+                setPrev_insights(data.prev_insights);
+                setStrenghts(data.strenghts);
+                setKpi1(data.kpi1);
+                setCurr_stand1(data.curr_stand1);
+                setGoal1(data.goal1);
+                setBehaviour1(data.behaviour1);
+                setChannel1(data.channel1);
+                setRoot_cause1(data.root_cause1);
+                setEduc_tools1(data.educ_tools1);
+                setKpi2(data.kpi2);
+                setCurr_stand2(data.curr_stand2);
+                setGoal2(data.goal2);
+                setBehaviour2(data.behaviour2);
+                setChannel2(data.channel2);
+                setRoot_cause2(data.root_cause2);
+                setEduc_tools2(data.educ_tools2);
+                setKpi3(data.kpi3);
+                setCurr_stand3(data.curr_stand3);
+                setGoal3(data.goal3);
+                setBehaviour3(data.behaviour3);
+                setChannel3(data.channel3);
+                setRoot_cause3(data.root_cause3);
+                setEduc_tools3(data.educ_tools3);
+                setOther_focus(data.other_focus);
+                setSmart(data.smart);
+                set_followup_Radio(data.followup);
+                setFollowdate(data.followdate);
+                setMgr_commit(data.mgr_commit);
+                setAttachment(data.attachment);
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        //const formatted_Start = dateFormat(coachingStart,"dddd, mmmm dS, yyyy, h:MM:ss TT");
+        const localstartDate = new Date(coachingStart);
+        const localendDate = new Date(coachingEnd);
+        const localfollowDate = new Date(followdate);
+
+        /* function apiCall_team() {
+            console.log("called from apiCall");
+            const response = await fetch(apiURL_team, {
                 method: 'GET',
                 credentials: 'same-origin',
                 headers: {
@@ -125,7 +196,7 @@ import "react-quill/dist/quill.snow.css"
             data.map((obj) => console.log(obj.teamName));
             setApi_data_team(data);
             setPrev_insights('test text');
-        };
+        } */
 
         useEffect(() => {
             apiCall_agent();
@@ -191,7 +262,7 @@ import "react-quill/dist/quill.snow.css"
                                 
                                 <Form.Control
                                             as="select"
-                                            defaultValue="-99"
+                                            value={activitytype}
                                             onChange={(e) => setActivitytype(e.target.value)}
                                         >
                                             <option value="-99" disabled>Activity Type...</option>
@@ -206,34 +277,35 @@ import "react-quill/dist/quill.snow.css"
                                             <option value="Compliance">Compliance</option>
                                             <option value="Performance Review (MYR/YER)">Performance Review (MYR/YER)</option>
                                             <option value="PIP">PIP</option>
+                                            
                                 </Form.Control>
                                 </Col>
                                 <Col>
                                     <Form.Label column sm={8}>Coaching Start </Form.Label>
                                     <DatePicker
-                                        selected={coachingStart}
+                                        selected={localstartDate}
                                         onChange={date => setcoachingStart(date)}
                                         showTimeSelect
                                         //placeholderText="Click to select coaching start time"
                                         timeFormat="HH:mm"
                                         timeIntervals={15}
-                                        timeCaption="time"
+                                        timeCaption="Time"
                                         dateFormat="yyyy-MM-dd H:mm"
-                                        customInput={<ExampleCustomInput />}
+                                        customInput={<Button_Style />}
                                     />
                                 </Col>
                                 <Col >
                                     <Form.Label column sm={8}>Coaching End</Form.Label>
                                     <DatePicker
-                                        selected={coachingEnd}
+                                        selected={localendDate}
                                         onChange={date => setcoachingEnd(date)}
                                         showTimeSelect
                                         //placeholderText="Click to select coaching start time"
                                         timeFormat="HH:mm"
                                         timeIntervals={15}
-                                        timeCaption="time"
+                                        timeCaption="Time"
                                         dateFormat="yyyy-MM-dd H:mm"
-                                        customInput={<ExampleCustomInput />}
+                                        customInput={<Button_Style />}
                                     />
                                 </Col>
                                 <Col >
@@ -297,6 +369,7 @@ import "react-quill/dist/quill.snow.css"
                                 onChange={(e) => {
                                     setStrenghts(e.target.value.toString().toLowerCase())
                                 }}
+                                value={strenghts} 
                                 />
                             </Form.Group>
                             </Col>
@@ -723,6 +796,7 @@ import "react-quill/dist/quill.snow.css"
                                 onChange={(e) => {
                                     setOther_focus(e.target.value.toString().toLowerCase())
                                 }}
+                                value = {other_focus}
                                 />
                             </Form.Group>
                             </Col>
@@ -736,6 +810,7 @@ import "react-quill/dist/quill.snow.css"
                                 onChange={(e) => {
                                     setSmart(e.target.value.toString().toLowerCase())
                                 }}
+                                value = {smart}
                                 />
                             </Form.Group>
                             </Col>
@@ -768,9 +843,9 @@ import "react-quill/dist/quill.snow.css"
                                 <Col>
                                     <Form.Label column sm={4}> Date : </Form.Label>
                                     <DatePicker
-                                        selected={followdate}
+                                        selected={localfollowDate}
                                         onChange={date => setFollowdate(date)}
-                                        customInput={<ExampleCustomInput />}
+                                        customInput={<Button_Style />}
                                     />
                                 </Col> 
                             </Row>
@@ -782,6 +857,7 @@ import "react-quill/dist/quill.snow.css"
                                 onChange={(e) => {
                                     setMgr_commit(e.target.value.toString().toLowerCase())
                                 }}
+                                value = {mgr_commit}
                                 />
                             </Form.Group>
                             </Col>
@@ -802,6 +878,7 @@ import "react-quill/dist/quill.snow.css"
                                         modules={quill_module}
                                         onChange={(e) => setAttachment(e)}
                                         placeholder= "Press ctrl+v to paste the image or use the above image icon to attach an image file."
+                                        value={attachment || "" }
                                     />
                             </Col></Row>
                             </Form.Group>
